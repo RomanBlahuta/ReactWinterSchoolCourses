@@ -3,6 +3,7 @@
 
     <body>
         <div id="root"></div>
+        <div id="second"></div>
 
         <script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
         <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
@@ -10,10 +11,16 @@
 
         <script type="text/babel">
             const rootElement = document.getElementById("root");
-
-            const reactElement = <div className="containerJSX">Hello JSX World!</div>
+            const div2 = document.getElementById("second");
+            const hello = "Hello JSX World!";
+            const className = "containerJSX";
+            const className2 = "class2";
+            const reactElement = <div className={className}>{hello}</div>;
+            const props = {children: hello, className: className2};
+            const elem2 = <div {...props}/>;
 
             ReactDOM.render(reactElement, rootElement);
+            ReactDOM.render(elem2, div2);
 
             console.log(reactElement);
 
