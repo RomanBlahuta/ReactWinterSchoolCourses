@@ -29,3 +29,5 @@
 * All child useEffect cleanups
 * Parent's cleanups
 * Parent's useEffects
+
+[Hook flow image from lesson](https://raw.githubusercontent.com/donavon/hook-flow/master/hook-flow.png)
