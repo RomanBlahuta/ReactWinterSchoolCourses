@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+        <script type="text/babel">
+
+            const state = {eventCount: 0, username: ""};
+
+            const App = () => {
+                const handleClick = () => {
+                    setState({eventCount: state.eventCount+1});
+                }
+
+                const handleChange = (event) => {
+                    setState({username: event.target.value});
+                };
+
+                return (<div>
+                    <p>There have been {state.eventCount} events.</p>
+                    <p><button onClick={handleClick}>Click Me</button></p>
+                    <p>You typed: {state.username}</p>
+                    <input onChange={handleChange}/>
+                </div>);
+
+            }
+
+            //const element = <App/>;
+
+            ReactDOM.render(<App/>, document.getElementById("root"));
+
+            const setState = (newState) => {
+                Object.assign(state, newState);
+                ReactDOM.render(<App/>, document.getElementById("root"));
+            }
+        </script>
+    </body>
+
+</html>
