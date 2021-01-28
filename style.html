@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <body>
+        <div id="root"></div>
+
+        <style>
+            .box {
+                border: 2px solid black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .box--small {
+                width: 50px;
+                height: 50px;
+            }
+
+            .box--medium {
+                width: 100px;
+                height: 100px;
+            }
+
+            .box--big {
+                width: 200px;
+                height: 200px;
+            }
+        </style>
+
+        <script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+        <script type="text/babel">
+            const Box = ({className = "", style, size="medium", ...rest}) => {
+
+                const sizeClassName = size ? `box--${size} ${className}` : "";
+                const props = {
+                    className: `box ${sizeClassName}`.trim(),
+                    style: {fontStyle: 'italic', ...style},
+                    ...rest
+                };
+                return <div {...props}>BOX</div>;
+            }
+
+            const element = (
+                <div>
+                    <Box size="small" style={{backgroundColor: "lightblue"}}/>
+                    <Box size="medium" style={{backgroundColor: "pink"}}/>
+                    <Box size="big" style={{backgroundColor: "gold"}}/>
+                </div>
+            );
+            ReactDOM.render(element, document.getElementById("root"));
+        </script>
+    </body>
+
+</html>
