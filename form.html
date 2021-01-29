@@ -19,7 +19,7 @@
                 const usernameRef = React.useRef();
 
                 const handleChange = (event) => {
-                    setUname(event.target.value);
+                    setUname(event.target.value.toLowerCase());
                 };
 
                 const handleSubmit = (event) => {
@@ -36,8 +36,8 @@
                 return (<form onSubmit={handleSubmit}>
                     <div>
                         <label htmlfor="usernameInput">Username:</label>
-                        <input ref={usernameRef} id="usernameInput" type="text" onChange={handleChange}/>
-                        <div style={{color: "red"}}>{error}</div>
+                        <input ref={usernameRef} id="usernameInput" type="text" onChange={handleChange} value={uname}/>
+                        {/*<div style={{color: "red"}}>{error}</div>*/}
                         <button disabled={Boolean(error)} type="submit">Submit</button>
                     </div>
                 </form>);
