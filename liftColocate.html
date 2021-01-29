@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+        <script type="text/babel">
+
+            // const FavAnimal = () => {
+            //     const [animal, setAnimal] = React.useState("");
+            //     return (
+            //         <div>
+            //             <label>Favourite Animal: </label>
+            //             <input value={animal} onChange={event => setAnimal(event.target.value)} />
+            //         </div>
+            //     );
+            // }
+
+            const FavAnimal = ({animal, onAnimalChange}) => {
+                //const [animal, setAnimal] = React.useState("");
+                return (
+                    <div>
+                        <label>Favourite Animal: </label>
+                        <input value={animal} onChange={onAnimalChange} />
+                    </div>
+                );
+            }
+
+            const Name = ({name, onNameChange}) => {
+                return (
+                    <div>
+                        <label>Name: </label>
+                        <input value={name} onChange={onNameChange} />
+                    </div>
+                );
+            }
+
+            const Display = ({name, animal}) => {
+                return <div>{`Hey ${name}, you like ${animal}s!`}</div>
+            }
+
+            const App = () => {
+                const [animal, setAnimal] = React.useState("");
+                const [name, setName] = React.useState("");
+
+                return (
+                    <form>
+                        <Name name={name} onNameChange={event => setName(event.target.value)} />
+                        <FavAnimal animal={animal} onAnimalChange={event => setAnimal(event.target.value)} />
+                        <Display name={name} animal={animal} />
+                    </form>
+                );
+            };
+
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script>
+    </body>
+
+</html>
