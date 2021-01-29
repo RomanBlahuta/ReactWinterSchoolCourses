@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+        <script type="text/babel">
+            const PokemonInfo = ({name}) => {
+                const [pokemon, setPokemon] = React.useState(null);
+                React.useEffect(() => {
+                    if (!name) {
+                        return;
+                    }
+                    fetchPokemon(name).then(pokemonData => {
+                        setPokemon(pokemonData);
+                    });
+                }, [name]);
+                if (!name) {
+                    return "Submit a pokemon.";
+                }
+                if (!pokemon) {
+                    return "...";
+                }
+
+                return <pre>{JSON.stringify(pokemon, null, 2)}</pre>
+            };
+
+            const App = () => {
+                const [name, setName] = React.useState("");
+
+                const handleSubmit = (event) => {
+                    event.preventDefault();
+                    setName(event.target.elements.pokemonName.value);
+                };
+
+                return (
+                    <div>
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor="pokemonName">Pokemon Name</label>
+                            <div>
+                                <input id="pokemonName" />
+                                <button type="submit">Submit</button>
+                            </div>
+                        </form>
+                        <hr />
+                        <PokemonInfo name={name} />
+                    </div>
+                );
+            }
+
+            function fetchPokemon(name) {
+                const pokemonQuery = `
+                query ($name: String) {
+                    pokemon(name: $name) {
+                        id
+                        number
+                        name
+                        attacks {
+                            special {
+                                name
+                                type
+                                damage
+                            }
+                        }
+                    }
+                }
+                `;
+
+                return window.fetch("https://graphql-pokemon.now.sh", {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify({
+                        query: pokemonQuery,
+                        variables: {name}
+                    })
+                }).then(r => r.json()).then(response => response.data.pokemon)
+            }
+
+            // NOTE: CORS protects the API so the tutorial program's functionality was not recreated but the code is identical
+
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script>
+    </body>
+
+</html>
