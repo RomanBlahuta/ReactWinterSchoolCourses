@@ -10,23 +10,35 @@
 
         <script type="text/babel">
             const PokemonInfo = ({name}) => {
+                const [status, setStatus] = React.useState("idle");
                 const [pokemon, setPokemon] = React.useState(null);
+                const [error, setError] = React.useState(null);
+
                 React.useEffect(() => {
                     if (!name) {
                         return;
                     }
+                    setStatus("pending");
                     fetchPokemon(name).then(pokemonData => {
+                        setStatus("resolved");
                         setPokemon(pokemonData);
+                    }, errorData => {
+                        setStatus("rejected");
+                        setError(errorData);
                     });
                 }, [name]);
-                if (!name) {
+                if (status === "idle") {
                     return "Submit a pokemon.";
                 }
-                if (!pokemon) {
+                if (status === "rejected") {
+                    return "Oh no...";
+                }
+                if (status === "pending") {
                     return "...";
                 }
-
-                return <pre>{JSON.stringify(pokemon, null, 2)}</pre>
+                if (status === "resolved") {
+                    return <pre>{JSON.stringify(pokemon, null, 2)}</pre>;
+                }
             };
 
             const App = () => {
